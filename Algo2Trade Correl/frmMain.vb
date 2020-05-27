@@ -194,33 +194,26 @@ Public Class frmMain
 
     Private Sub InitUI(ByVal value As Boolean)
         SetObjectEnableDisable_ThreadSafe(btnView, value)
+        SetObjectEnableDisable_ThreadSafe(pnlDetails, value)
         SetObjectEnableDisable_ThreadSafe(btnCancel, Not value)
     End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         _canceller.Cancel()
-        InitUI(True)
     End Sub
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitUI(True)
-        cmbCategory.SelectedIndex = My.Settings.Category
-        cmbRule.SelectedIndex = My.Settings.Rule
-        txtMinimumLots.Text = My.Settings.MinimumLots
         txtInstruments.Text = My.Settings.Intrument
-        Try
-            dtpckrFromDate.Value = My.Settings.FromDate
-            dtpckrToDate.Value = My.Settings.ToDate
-        Catch ex As Exception
-            dtpckrFromDate.Value = Now
-            dtpckrToDate.Value = Now
-        End Try
+        cmbCategory.SelectedIndex = My.Settings.Category
+        If My.Settings.LastDate <> Date.MinValue Then dtpckrLastDate.Value = My.Settings.LastDate
+        nmrcTimeframe.Value = My.Settings.Timeframe
+        nmrcNumberOfCandles.Value = My.Settings.NumberOfCandles
     End Sub
     Private Async Sub btnView_Click(sender As Object, e As EventArgs) Handles btnView.Click
-        My.Settings.Category = cmbCategory.SelectedIndex
-        My.Settings.Rule = cmbRule.SelectedIndex
-        My.Settings.FromDate = dtpckrFromDate.Value
-        My.Settings.ToDate = dtpckrToDate.Value
         My.Settings.Intrument = txtInstruments.Text
-        My.Settings.MinimumLots = txtMinimumLots.Text
+        My.Settings.Category = cmbCategory.SelectedIndex
+        My.Settings.LastDate = dtpckrLastDate.Value
+        My.Settings.Timeframe = nmrcTimeframe.Value
+        My.Settings.NumberOfCandles = nmrcNumberOfCandles.Value
         My.Settings.Save()
         InitUI(False)
 
@@ -229,45 +222,59 @@ Public Class frmMain
     End Sub
     Private Async Function ViewDataAsync() As Task
         Try
-            Dim startDate As Date = GetDateTimePickerValue_ThreadSafe(dtpckrFromDate)
-            Dim endDate As Date = GetDateTimePickerValue_ThreadSafe(dtpckrToDate)
-            Dim selectedRule As Integer = GetComboBoxIndex_ThreadSafe(cmbRule)
+            Dim lastDate As Date = GetDateTimePickerValue_ThreadSafe(dtpckrLastDate)
             Dim names As String = GetTextBoxText_ThreadSafe(txtInstruments)
             Dim category As String = GetComboBoxItem_ThreadSafe(cmbCategory)
-            Dim minimumLots As String = GetTextBoxText_ThreadSafe(txtMinimumLots)
+            Dim timeframe As Integer = GetNumericUpDownValue_ThreadSafe(nmrcTimeframe)
+            Dim numberOfCandles As Integer = GetNumericUpDownValue_ThreadSafe(nmrcNumberOfCandles)
+
+            Dim startDate As Date = Date.MinValue
+            Dim totalNumberOfMinCandles As Integer = Integer.MinValue
+            Select Case category
+                Case "Intraday Cash", "Intraday Future", "EOD Cash", "EOD Future"
+                    totalNumberOfMinCandles = 375
+                Case "Intraday Currency", "EOD Currency"
+                    totalNumberOfMinCandles = 480
+                Case "Intraday Commodity", "EOD Commodity"
+                    totalNumberOfMinCandles = 870
+                Case Else
+                    Throw New NotImplementedException
+            End Select
+            If totalNumberOfMinCandles <> Integer.MinValue Then
+                Dim totalNumberOfXMinCandles As Integer = Math.Ceiling(totalNumberOfMinCandles / timeframe)
+                Dim numberOfDays As Integer = Math.Ceiling(numberOfCandles / totalNumberOfXMinCandles)
+                Dim numberOfDaysWithOffset As Integer = numberOfDays + Math.Ceiling(numberOfDays / 5) * 2 + 5
+                startDate = lastDate.AddDays(numberOfDaysWithOffset * -1)
+            End If
 
             Dim instruments() As String = names.Trim.Split(vbCrLf)
 
-            Dim outputFileName As String = Path.Combine(My.Application.Info.DirectoryPath, String.Format("Data Output {0} {1}_{2}_{3}.xlsx", category, Now.Hour, Now.Minute, Now.Second))
-            Using excelWriter As New ExcelHelper(outputFileName, ExcelHelper.ExcelOpenStatus.OpenAfreshForWrite, ExcelHelper.ExcelSaveType.XLS_XLSX, _canceller)
-                AddHandler excelWriter.Heartbeat, AddressOf OnHeartbeat
-                AddHandler excelWriter.WaitingFor, AddressOf OnWaitingFor
+            If instruments IsNot Nothing AndAlso instruments.Count > 0 AndAlso startDate <> Date.MinValue Then
+                Dim outputFileName As String = Path.Combine(My.Application.Info.DirectoryPath, String.Format("Data Output {0} {1}_{2}_{3}.xlsx", category, Now.Hour, Now.Minute, Now.Second))
+                Using excelWriter As New ExcelHelper(outputFileName, ExcelHelper.ExcelOpenStatus.OpenAfreshForWrite, ExcelHelper.ExcelSaveType.XLS_XLSX, _canceller)
+                    AddHandler excelWriter.Heartbeat, AddressOf OnHeartbeat
+                    AddHandler excelWriter.WaitingFor, AddressOf OnWaitingFor
 
-                excelWriter.SaveExcel()
-            End Using
-            Dim counter As Integer = 0
-            For Each runningInstrument In instruments
-                counter += 1
-                Dim instrumentName As String = Nothing
-                Dim lotSize As String = Nothing
-                Dim instrumentData() As String = runningInstrument.Trim.Split(",")
-                If instrumentData IsNot Nothing AndAlso instrumentData.Count > 0 Then
-                    If instrumentData.Count = 1 Then instrumentName = instrumentData(0)
-                    If instrumentData.Count = 2 Then
-                        instrumentName = instrumentData(0)
-                        lotSize = instrumentData(1)
-                    End If
+                    excelWriter.SaveExcel()
+                End Using
+                Dim counter As Integer = 0
+                For Each runningInstrument In instruments
+                    counter += 1
+                    Dim instrumentName As String = runningInstrument.Trim
+
                     OnHeartbeatMain(String.Format("Running for:{0}  ({1}/{2})", instrumentName.Trim, counter, instruments.Count))
-                    Dim dt As DataTable = Nothing
-                    Dim rule As Rule = New GetRawCandle(_canceller, category, instrumentName.Trim, 1, False)
+
+                    Dim rule As GetRawCandle = New GetRawCandle(_canceller, category, instrumentName.Trim, timeframe, numberOfCandles)
                     AddHandler rule.Heartbeat, AddressOf OnHeartbeat
                     AddHandler rule.WaitingFor, AddressOf OnWaitingFor
                     AddHandler rule.DocumentRetryStatus, AddressOf OnDocumentRetryStatus
                     AddHandler rule.DocumentDownloadComplete, AddressOf OnDocumentDownloadComplete
-                    dt = Await rule.RunAsync(startDate, endDate).ConfigureAwait(False)
-                    WriteToExcel(outputFileName, dt, instrumentName.Trim, lotSize, minimumLots)
-                End If
-            Next
+
+                    Dim dt As DataTable = Await rule.RunAsync(startDate, lastDate).ConfigureAwait(False)
+
+                    WriteToExcel(outputFileName, dt, instrumentName.Trim)
+                Next
+            End If
         Catch ox As OperationCanceledException
             MsgBox(String.Format("Error: {0}", ox.Message), MsgBoxStyle.Critical)
         Catch ex As Exception
@@ -278,7 +285,7 @@ Public Class frmMain
             InitUI(True)
         End Try
     End Function
-    Private Sub WriteToExcel(ByVal outputFileName As String, ByVal dataToWrite As DataTable, ByVal sheetName As String, ByVal lotSize As String, ByVal minimumExpectedLots As String)
+    Private Sub WriteToExcel(ByVal outputFileName As String, ByVal dataToWrite As DataTable, ByVal sheetName As String)
         If dataToWrite IsNot Nothing Then
             Using excelWriter As New ExcelHelper(outputFileName, ExcelHelper.ExcelOpenStatus.OpenExistingForReadWrite, ExcelHelper.ExcelSaveType.XLS_XLSX, _canceller)
                 AddHandler excelWriter.Heartbeat, AddressOf OnHeartbeat
@@ -304,13 +311,6 @@ Public Class frmMain
 
                 Dim range As String = excelWriter.GetNamedRange(1, dataToWrite.Rows.Count, 1, dataToWrite.Columns.Count - 1)
                 excelWriter.WriteArrayToExcel(mainRawData, range)
-
-                If lotSize IsNot Nothing Then
-                    excelWriter.SetData(1, 16, "Lot Size")
-                    excelWriter.SetData(1, 17, lotSize)
-                    excelWriter.SetData(2, 16, "Minimum Expected Lots")
-                    excelWriter.SetData(2, 17, minimumExpectedLots)
-                End If
 
                 excelWriter.SaveExcel()
             End Using

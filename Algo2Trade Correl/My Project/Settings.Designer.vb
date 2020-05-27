@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -56,23 +56,12 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property FromDate() As Date
+        Public Property LastDate() As Date
             Get
-                Return CType(Me("FromDate"),Date)
+                Return CType(Me("LastDate"),Date)
             End Get
             Set
-                Me("FromDate") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property ToDate() As Date
-            Get
-                Return CType(Me("ToDate"),Date)
-            End Get
-            Set
-                Me("ToDate") = value
+                Me("LastDate") = value
             End Set
         End Property
         
@@ -90,18 +79,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property Rule() As Integer
-            Get
-                Return CType(Me("Rule"),Integer)
-            End Get
-            Set
-                Me("Rule") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public Property Intrument() As String
             Get
@@ -114,13 +91,25 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property MinimumLots() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property Timeframe() As Integer
             Get
-                Return CType(Me("MinimumLots"),String)
+                Return CType(Me("Timeframe"),Integer)
             End Get
             Set
-                Me("MinimumLots") = value
+                Me("Timeframe") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
+        Public Property NumberOfCandles() As Integer
+            Get
+                Return CType(Me("NumberOfCandles"),Integer)
+            End Get
+            Set
+                Me("NumberOfCandles") = value
             End Set
         End Property
     End Class

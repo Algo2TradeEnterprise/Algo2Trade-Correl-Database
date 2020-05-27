@@ -23,235 +23,219 @@ Partial Class frmMain
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.btnCancel = New System.Windows.Forms.Button()
-        Me.dtpckrToDate = New System.Windows.Forms.DateTimePicker()
-        Me.dtpckrFromDate = New System.Windows.Forms.DateTimePicker()
-        Me.lblToDate = New System.Windows.Forms.Label()
-        Me.lblFromDate = New System.Windows.Forms.Label()
-        Me.btnView = New System.Windows.Forms.Button()
+        Me.pnlDetails = New System.Windows.Forms.Panel()
+        Me.nmrcNumberOfCandles = New System.Windows.Forms.NumericUpDown()
+        Me.nmrcTimeframe = New System.Windows.Forms.NumericUpDown()
+        Me.lblNumberOfCandles = New System.Windows.Forms.Label()
+        Me.lblTimeframe = New System.Windows.Forms.Label()
+        Me.txtInstruments = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.dtpckrLastDate = New System.Windows.Forms.DateTimePicker()
+        Me.lblLastDate = New System.Windows.Forms.Label()
         Me.cmbCategory = New System.Windows.Forms.ComboBox()
         Me.lblCategory = New System.Windows.Forms.Label()
-        Me.cmbRule = New System.Windows.Forms.ComboBox()
-        Me.lblRule = New System.Windows.Forms.Label()
         Me.lblProgress = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.txtInstruments = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtMinimumLots = New System.Windows.Forms.TextBox()
         Me.lblProgressMain = New System.Windows.Forms.Label()
-        Me.Panel1.SuspendLayout()
+        Me.btnCancel = New System.Windows.Forms.Button()
+        Me.btnView = New System.Windows.Forms.Button()
+        Me.pnlDetails.SuspendLayout()
+        CType(Me.nmrcNumberOfCandles, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nmrcTimeframe, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'Panel1
+        'pnlDetails
         '
-        Me.Panel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.pnlDetails.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Panel1.Controls.Add(Me.btnCancel)
-        Me.Panel1.Controls.Add(Me.dtpckrToDate)
-        Me.Panel1.Controls.Add(Me.dtpckrFromDate)
-        Me.Panel1.Controls.Add(Me.lblToDate)
-        Me.Panel1.Controls.Add(Me.lblFromDate)
-        Me.Panel1.Controls.Add(Me.btnView)
-        Me.Panel1.Controls.Add(Me.cmbCategory)
-        Me.Panel1.Controls.Add(Me.lblCategory)
-        Me.Panel1.Controls.Add(Me.cmbRule)
-        Me.Panel1.Controls.Add(Me.lblRule)
-        Me.Panel1.Location = New System.Drawing.Point(3, 11)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(745, 85)
-        Me.Panel1.TabIndex = 1
+        Me.pnlDetails.Controls.Add(Me.nmrcNumberOfCandles)
+        Me.pnlDetails.Controls.Add(Me.nmrcTimeframe)
+        Me.pnlDetails.Controls.Add(Me.lblNumberOfCandles)
+        Me.pnlDetails.Controls.Add(Me.lblTimeframe)
+        Me.pnlDetails.Controls.Add(Me.txtInstruments)
+        Me.pnlDetails.Controls.Add(Me.Label4)
+        Me.pnlDetails.Controls.Add(Me.dtpckrLastDate)
+        Me.pnlDetails.Controls.Add(Me.lblLastDate)
+        Me.pnlDetails.Controls.Add(Me.cmbCategory)
+        Me.pnlDetails.Controls.Add(Me.lblCategory)
+        Me.pnlDetails.Location = New System.Drawing.Point(3, 11)
+        Me.pnlDetails.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.pnlDetails.Name = "pnlDetails"
+        Me.pnlDetails.Size = New System.Drawing.Size(627, 197)
+        Me.pnlDetails.TabIndex = 1
         '
-        'btnCancel
+        'nmrcNumberOfCandles
         '
-        Me.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.btnCancel.Location = New System.Drawing.Point(626, 45)
-        Me.btnCancel.Margin = New System.Windows.Forms.Padding(4)
-        Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.Size = New System.Drawing.Size(100, 28)
-        Me.btnCancel.TabIndex = 29
-        Me.btnCancel.Text = "Stop"
-        Me.btnCancel.UseVisualStyleBackColor = True
+        Me.nmrcNumberOfCandles.Location = New System.Drawing.Point(436, 110)
+        Me.nmrcNumberOfCandles.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.nmrcNumberOfCandles.Maximum = New Decimal(New Integer() {100000000, 0, 0, 0})
+        Me.nmrcNumberOfCandles.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nmrcNumberOfCandles.Name = "nmrcNumberOfCandles"
+        Me.nmrcNumberOfCandles.Size = New System.Drawing.Size(109, 22)
+        Me.nmrcNumberOfCandles.TabIndex = 32
+        Me.nmrcNumberOfCandles.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'dtpckrToDate
+        'nmrcTimeframe
         '
-        Me.dtpckrToDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpckrToDate.Location = New System.Drawing.Point(277, 46)
-        Me.dtpckrToDate.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.dtpckrToDate.Name = "dtpckrToDate"
-        Me.dtpckrToDate.Size = New System.Drawing.Size(108, 22)
-        Me.dtpckrToDate.TabIndex = 26
+        Me.nmrcTimeframe.Location = New System.Drawing.Point(436, 78)
+        Me.nmrcTimeframe.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.nmrcTimeframe.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.nmrcTimeframe.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nmrcTimeframe.Name = "nmrcTimeframe"
+        Me.nmrcTimeframe.Size = New System.Drawing.Size(109, 22)
+        Me.nmrcTimeframe.TabIndex = 31
+        Me.nmrcTimeframe.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'dtpckrFromDate
+        'lblNumberOfCandles
         '
-        Me.dtpckrFromDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpckrFromDate.Location = New System.Drawing.Point(93, 44)
-        Me.dtpckrFromDate.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.dtpckrFromDate.Name = "dtpckrFromDate"
-        Me.dtpckrFromDate.Size = New System.Drawing.Size(108, 22)
-        Me.dtpckrFromDate.TabIndex = 25
+        Me.lblNumberOfCandles.AutoSize = True
+        Me.lblNumberOfCandles.Location = New System.Drawing.Point(292, 112)
+        Me.lblNumberOfCandles.Name = "lblNumberOfCandles"
+        Me.lblNumberOfCandles.Size = New System.Drawing.Size(136, 17)
+        Me.lblNumberOfCandles.TabIndex = 30
+        Me.lblNumberOfCandles.Text = "Number Of Candles:"
         '
-        'lblToDate
+        'lblTimeframe
         '
-        Me.lblToDate.AutoSize = True
-        Me.lblToDate.Location = New System.Drawing.Point(211, 47)
-        Me.lblToDate.Name = "lblToDate"
-        Me.lblToDate.Size = New System.Drawing.Size(63, 17)
-        Me.lblToDate.TabIndex = 24
-        Me.lblToDate.Text = "To Date:"
+        Me.lblTimeframe.AutoSize = True
+        Me.lblTimeframe.Location = New System.Drawing.Point(292, 80)
+        Me.lblTimeframe.Name = "lblTimeframe"
+        Me.lblTimeframe.Size = New System.Drawing.Size(79, 17)
+        Me.lblTimeframe.TabIndex = 29
+        Me.lblTimeframe.Text = "Timeframe:"
         '
-        'lblFromDate
+        'txtInstruments
         '
-        Me.lblFromDate.AutoSize = True
-        Me.lblFromDate.Location = New System.Drawing.Point(11, 46)
-        Me.lblFromDate.Name = "lblFromDate"
-        Me.lblFromDate.Size = New System.Drawing.Size(78, 17)
-        Me.lblFromDate.TabIndex = 23
-        Me.lblFromDate.Text = "From Date:"
+        Me.txtInstruments.Location = New System.Drawing.Point(12, 30)
+        Me.txtInstruments.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.txtInstruments.Multiline = True
+        Me.txtInstruments.Name = "txtInstruments"
+        Me.txtInstruments.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.txtInstruments.Size = New System.Drawing.Size(273, 153)
+        Me.txtInstruments.TabIndex = 28
         '
-        'btnView
+        'Label4
         '
-        Me.btnView.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.btnView.Location = New System.Drawing.Point(508, 45)
-        Me.btnView.Margin = New System.Windows.Forms.Padding(4)
-        Me.btnView.Name = "btnView"
-        Me.btnView.Size = New System.Drawing.Size(100, 28)
-        Me.btnView.TabIndex = 22
-        Me.btnView.Text = "View"
-        Me.btnView.UseVisualStyleBackColor = True
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(8, 11)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(280, 17)
+        Me.Label4.TabIndex = 27
+        Me.Label4.Text = "Instrument Names: (Seperated by new line)"
+        '
+        'dtpckrLastDate
+        '
+        Me.dtpckrLastDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtpckrLastDate.Location = New System.Drawing.Point(436, 43)
+        Me.dtpckrLastDate.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.dtpckrLastDate.Name = "dtpckrLastDate"
+        Me.dtpckrLastDate.Size = New System.Drawing.Size(108, 22)
+        Me.dtpckrLastDate.TabIndex = 26
+        '
+        'lblLastDate
+        '
+        Me.lblLastDate.AutoSize = True
+        Me.lblLastDate.Location = New System.Drawing.Point(292, 46)
+        Me.lblLastDate.Name = "lblLastDate"
+        Me.lblLastDate.Size = New System.Drawing.Size(73, 17)
+        Me.lblLastDate.TabIndex = 24
+        Me.lblLastDate.Text = "Last Date:"
         '
         'cmbCategory
         '
         Me.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbCategory.FormattingEnabled = True
         Me.cmbCategory.Items.AddRange(New Object() {"Intraday Cash", "Intraday Currency", "Intraday Commodity", "Intraday Future", "EOD Cash", "EOD Currency", "EOD Commodity", "EOD Future"})
-        Me.cmbCategory.Location = New System.Drawing.Point(544, 9)
+        Me.cmbCategory.Location = New System.Drawing.Point(436, 7)
         Me.cmbCategory.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.cmbCategory.Name = "cmbCategory"
-        Me.cmbCategory.Size = New System.Drawing.Size(182, 24)
+        Me.cmbCategory.Size = New System.Drawing.Size(183, 24)
         Me.cmbCategory.TabIndex = 19
         '
         'lblCategory
         '
         Me.lblCategory.AutoSize = True
-        Me.lblCategory.Location = New System.Drawing.Point(403, 11)
+        Me.lblCategory.Location = New System.Drawing.Point(292, 11)
         Me.lblCategory.Name = "lblCategory"
         Me.lblCategory.Size = New System.Drawing.Size(139, 17)
         Me.lblCategory.TabIndex = 18
         Me.lblCategory.Text = "Instrument Category:"
         '
-        'cmbRule
-        '
-        Me.cmbRule.FormattingEnabled = True
-        Me.cmbRule.Items.AddRange(New Object() {"Get Raw Candle"})
-        Me.cmbRule.Location = New System.Drawing.Point(108, 7)
-        Me.cmbRule.Margin = New System.Windows.Forms.Padding(4)
-        Me.cmbRule.Name = "cmbRule"
-        Me.cmbRule.Size = New System.Drawing.Size(285, 24)
-        Me.cmbRule.TabIndex = 17
-        '
-        'lblRule
-        '
-        Me.lblRule.AutoSize = True
-        Me.lblRule.Location = New System.Drawing.Point(11, 12)
-        Me.lblRule.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.lblRule.Name = "lblRule"
-        Me.lblRule.Size = New System.Drawing.Size(93, 17)
-        Me.lblRule.TabIndex = 16
-        Me.lblRule.Text = "Choose Rule:"
-        '
         'lblProgress
         '
         Me.lblProgress.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblProgress.Location = New System.Drawing.Point(17, 299)
+        Me.lblProgress.Location = New System.Drawing.Point(4, 250)
         Me.lblProgress.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblProgress.Name = "lblProgress"
-        Me.lblProgress.Size = New System.Drawing.Size(712, 63)
+        Me.lblProgress.Size = New System.Drawing.Size(740, 63)
         Me.lblProgress.TabIndex = 19
         Me.lblProgress.Text = "Progess Status ....."
         '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(12, 104)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(126, 17)
-        Me.Label4.TabIndex = 22
-        Me.Label4.Text = "Instrument Names:"
-        '
-        'txtInstruments
-        '
-        Me.txtInstruments.Location = New System.Drawing.Point(144, 103)
-        Me.txtInstruments.Multiline = True
-        Me.txtInstruments.Name = "txtInstruments"
-        Me.txtInstruments.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtInstruments.Size = New System.Drawing.Size(271, 147)
-        Me.txtInstruments.TabIndex = 23
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(431, 106)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(160, 17)
-        Me.Label1.TabIndex = 24
-        Me.Label1.Text = "Minimum Expected Lots:"
-        '
-        'txtMinimumLots
-        '
-        Me.txtMinimumLots.Location = New System.Drawing.Point(597, 105)
-        Me.txtMinimumLots.Name = "txtMinimumLots"
-        Me.txtMinimumLots.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtMinimumLots.Size = New System.Drawing.Size(103, 22)
-        Me.txtMinimumLots.TabIndex = 25
-        '
         'lblProgressMain
         '
-        Me.lblProgressMain.Location = New System.Drawing.Point(17, 264)
+        Me.lblProgressMain.Location = New System.Drawing.Point(5, 214)
         Me.lblProgressMain.Name = "lblProgressMain"
-        Me.lblProgressMain.Size = New System.Drawing.Size(712, 30)
+        Me.lblProgressMain.Size = New System.Drawing.Size(737, 30)
         Me.lblProgressMain.TabIndex = 26
         Me.lblProgressMain.Text = "Total Progress ....."
+        '
+        'btnCancel
+        '
+        Me.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btnCancel.Location = New System.Drawing.Point(639, 58)
+        Me.btnCancel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnCancel.Name = "btnCancel"
+        Me.btnCancel.Size = New System.Drawing.Size(100, 42)
+        Me.btnCancel.TabIndex = 33
+        Me.btnCancel.Text = "Stop"
+        Me.btnCancel.UseVisualStyleBackColor = True
+        '
+        'btnView
+        '
+        Me.btnView.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btnView.Location = New System.Drawing.Point(639, 9)
+        Me.btnView.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnView.Name = "btnView"
+        Me.btnView.Size = New System.Drawing.Size(100, 42)
+        Me.btnView.TabIndex = 32
+        Me.btnView.Text = "View"
+        Me.btnView.UseVisualStyleBackColor = True
         '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(752, 362)
+        Me.ClientSize = New System.Drawing.Size(747, 318)
+        Me.Controls.Add(Me.btnCancel)
+        Me.Controls.Add(Me.btnView)
         Me.Controls.Add(Me.lblProgressMain)
-        Me.Controls.Add(Me.txtMinimumLots)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.txtInstruments)
-        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.lblProgress)
-        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.pnlDetails)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.MaximizeBox = False
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Algo2Trade Correl - Database"
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
+        Me.Text = "Algo2Trade Correl"
+        Me.pnlDetails.ResumeLayout(False)
+        Me.pnlDetails.PerformLayout()
+        CType(Me.nmrcNumberOfCandles, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nmrcTimeframe, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents cmbRule As ComboBox
-    Friend WithEvents lblRule As Label
+    Friend WithEvents pnlDetails As Panel
     Friend WithEvents cmbCategory As ComboBox
     Friend WithEvents lblCategory As Label
-    Friend WithEvents btnView As Button
     Friend WithEvents lblProgress As Label
-    Friend WithEvents dtpckrToDate As DateTimePicker
-    Friend WithEvents dtpckrFromDate As DateTimePicker
-    Friend WithEvents lblToDate As Label
-    Friend WithEvents lblFromDate As Label
-    Friend WithEvents btnCancel As Button
-    Friend WithEvents Label4 As Label
-    Friend WithEvents txtInstruments As TextBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents txtMinimumLots As TextBox
+    Friend WithEvents dtpckrLastDate As DateTimePicker
+    Friend WithEvents lblLastDate As Label
     Friend WithEvents lblProgressMain As Label
+    Friend WithEvents txtInstruments As TextBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents lblNumberOfCandles As Label
+    Friend WithEvents lblTimeframe As Label
+    Friend WithEvents nmrcNumberOfCandles As NumericUpDown
+    Friend WithEvents nmrcTimeframe As NumericUpDown
+    Friend WithEvents btnCancel As Button
+    Friend WithEvents btnView As Button
 End Class
