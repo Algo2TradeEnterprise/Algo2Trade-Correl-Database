@@ -50,7 +50,7 @@ Public Class GetRawCandle
     Public Async Function RunAsync(ByVal startDate As Date, ByVal endDate As Date) As Task(Of DataTable)
         Dim ret As DataTable = Nothing
         Select Case _category
-            Case "Intraday Cash"
+            Case "Intraday Cash", "EOD Cash"
                 ret = Await RunCashAsync(startDate, endDate).ConfigureAwait(False)
             Case Else
                 ret = Await RunOthersAsync(startDate, endDate).ConfigureAwait(False)
@@ -95,7 +95,7 @@ Public Class GetRawCandle
                             stockPayload = _common.GetRawPayload(Common.DataBaseTable.Intraday_Futures, stock, chkDate.AddDays(-7), chkDate)
                         Case "EOD Cash"
                             exchangeStartTime = New Date(chkDate.Year, chkDate.Month, chkDate.Day, 9, 15, 0)
-                            stockPayload = _common.GetRawPayload(Common.DataBaseTable.EOD_Cash, stock, chkDate.AddDays(-7), chkDate)
+                            stockPayload = _common.GetRawPayload(Common.DataBaseTable.EOD_POSITIONAL, stock, chkDate.AddDays(-7), chkDate)
                         Case "EOD Currency"
                             exchangeStartTime = New Date(chkDate.Year, chkDate.Month, chkDate.Day, 9, 0, 0)
                             stockPayload = _common.GetRawPayload(Common.DataBaseTable.EOD_Currency, stock, chkDate.AddDays(-7), chkDate)
@@ -164,7 +164,7 @@ Public Class GetRawCandle
         If stockList IsNot Nothing AndAlso stockList.Count > 0 Then
             For Each stock In stockList
                 _canceller.Token.ThrowIfCancellationRequested()
-                Dim stockPayload As Dictionary(Of Date, Payload) = _common.GetRawPayload(Common.DataBaseTable.Intraday_Cash, stock, startDate.Date.AddDays(-7), endDate.Date)
+                Dim stockPayload As Dictionary(Of Date, Payload) = _common.GetRawPayload(Common.DataBaseTable.EOD_POSITIONAL, stock, startDate.Date, endDate.Date)
                 _canceller.Token.ThrowIfCancellationRequested()
                 If stockPayload IsNot Nothing AndAlso stockPayload.Count > 0 Then
                     Dim inputPayload As Dictionary(Of Date, Payload) = Nothing

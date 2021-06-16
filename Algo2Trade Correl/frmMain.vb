@@ -231,21 +231,24 @@ Public Class frmMain
             Dim startDate As Date = Date.MinValue
             Dim totalNumberOfMinCandles As Integer = Integer.MinValue
             Select Case category
-                Case "Intraday Cash", "Intraday Future", "EOD Cash", "EOD Future"
+                Case "Intraday Cash", "Intraday Future"
                     totalNumberOfMinCandles = 375
-                Case "Intraday Currency", "EOD Currency"
+                Case "Intraday Currency"
                     totalNumberOfMinCandles = 480
-                Case "Intraday Commodity", "EOD Commodity"
+                Case "Intraday Commodity"
                     totalNumberOfMinCandles = 870
+                Case "EOD Cash", "EOD Future", "EOD Currency", "EOD Commodity"
+                    totalNumberOfMinCandles = 1
                 Case Else
                     Throw New NotImplementedException
             End Select
             If totalNumberOfMinCandles <> Integer.MinValue Then
                 Dim totalNumberOfXMinCandles As Integer = Math.Ceiling(totalNumberOfMinCandles / timeframe)
                 Dim numberOfDays As Integer = Math.Ceiling(numberOfCandles / totalNumberOfXMinCandles)
-                Dim numberOfDaysWithOffset As Integer = numberOfDays + Math.Ceiling(numberOfDays / 5) * 2 + 5
+                Dim numberOfDaysWithOffset As Integer = numberOfDays + Math.Ceiling(numberOfDays / 3) * 2 + 5
                 startDate = lastDate.AddDays(numberOfDaysWithOffset * -1)
             End If
+            startDate = New Date(2020, 1, 1)
 
             Dim instruments() As String = names.Trim.Split(vbCrLf)
 
